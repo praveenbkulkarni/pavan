@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<dataset>
+    <images>
+        <image file="/home/ubuntu/35Hawk/engage/train/DSC_0033.JPG">
+            <box height="87" left="312" top="207" width="37" />
+            <box height="86" left="269" top="206" width="37" />
+            <box height="84" left="221" top="206" width="36" />
+            <box height="87" left="167" top="182" width="48" />
+            <box height="92" left="107" top="175" width="49" />
+            <box height="93" left="48" top="175" width="44" />
+            <box height="71" left="360" top="233" width="34" />
+            <box height="71" left="407" top="234" width="37" />
+            <box height="73" left="554" top="240" width="40" />
+            <box height="70" left="454" top="236" width="39" />
+            <box height="73" left="510" top="237" width="34" />
+        </image>
+        <image file="/home/ubuntu/35Hawk/engage/train/DSC_0046.JPG">
+            <box height="59" left="424" top="183" width="33" />
+            <box height="62" left="389" top="193" width="26" />
+            <box height="58" left="502" top="176" width="36" />
+            <box height="67" left="464" top="187" width="28" />
+            <box height="48" left="306" top="206" width="23" />
+            <box height="53" left="276" top="208" width="25" />
+            <box height="52" left="364" top="200" width="21" />
+            <box height="47" left="335" top="208" width="25" />
+            <box height="42" left="250" top="216" width="24" />
+            <box height="54" left="226" top="203" width="20" />
+            <box height="37" left="180" top="217" width="17" />
+            <box height="38" left="133" top="219" width="16" />
+            <box height="57" left="204" top="199" width="19" />
+            <box height="41" left="158" top="213" width="15" />
+        </image>
+    </images>
+</dataset>

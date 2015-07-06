@@ -1,0 +1,180 @@
+{% load staticfiles %}
+<style>
+    div#statusContainer {
+ position: fixed;
+ left: 48%;
+ top: 0px;
+ width: 100%;
+ height: 10px;
+}
+
+div#statusMessageContainer {
+ position: absolute;
+ background-color: #FFFFB1;
+ color: black;
+ width: 80px;
+ font-family: Arial, Helvetica, sans-serif;
+ padding: 2px;
+ left: 0px;
+ font-weight: 700;
+}
+    </style>
+
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="/static/css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="/static/css/style.css"> <!-- Resource style -->
+	<script src="/static/js/modernizr.js"></script> <!-- Modernizr -->
+  <script src="/static/js/bootstrap-filestyle.js"></script>
+<div>
+		<h1>Slide In Panel</h1>
+		<a href="#0" class="cd-btn">Fire Panel</a>
+		<!-- your content here -->
+</div>
+<div class="cd-panel from-right">
+		<header class="cd-panel-header">
+			<h1>Title Goes Here</h1>
+			<a href="#0" class="cd-panel-close">Close</a>
+		</header>
+        <div class="cd-panel-container">
+			<div class="cd-panel-content">
+			<p>{% for contact in contacts %}
+    {# Each "contact" is a Contact model object. #}
+    {{ contact.top|upper }}<br />
+{% endfor %}
+</p>
+<div class="pagination">
+    <span class="step-links">
+        <a href="?page=1">start</a>
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% endif %}
+        {% for no in contacts.paginator.page_range %}
+            <a href="?page={{ no }}">{{ no }}</a>
+        {% endfor %}
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">next</a>
+        {% endif %}
+        <a href="?page={{ contacts.end_index }}">end</a>
+    </span>
+</div>
+<!-- <form method = "post" id = "frm_upload" enctype="multipart/form-data">{% csrf_token %}</tr>
+            <tr><input type="file" id = "file_id" multiple="true" name="docfile" accept=".jpg,.JPG,.jpeg,.JPEG" class = "btn btn-default btn-sm"required></tr>
+<div class="dropup">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to train" name="train" ></input></a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to test" name="test" ></input></a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to demo" name="demo" ></input></a></li>
+             </ul>
+</div>
+
+
+        </form>
+ -->
+        </div>
+            </div> <!-- cd-panel-content -->
+		</div> <!-- cd-panel-container -->
+	</div> <!-- cd-panel -->
+
+<input id="demo6" type="submit" value="Show Dialog" />
+
+<div id="question" style="display:none; cursor: default">
+        <h1>Would you like to contine?.</h1>
+        <input type="button" id="yes" value="Yes" />
+        <input type="button" id="no" value="No" />
+</div>
+
+<div id="statusContainer" style="visibility: hidden;">
+ <div id="statusMessageContainer">Loading...</div>
+</div>
+
+<input type="button" id="toggleButton" name="toggleButton" onclick="ToggleStatus();" value="Show" />
+<!-- file upload -->
+<form  method="post" id="frmUpload"  enctype="multipart/form-data">  {% csrf_token %}
+
+  <input type="file" id="file_id" multiple="true" name="docfile" accept=".jpg,.JPG,.jpeg,.JPEG" class="filestyle" required>
+  <!-- <button type="button" id="formSubmit">submit</button> -->
+  <input   name="test" type="submit" value="test" />
+  <input   name="train" type="submit" value="train" />
+  <input   name="demo" type="submit" value="demo" />
+  </form>
+
+<script src="/static/js/jquery-1.10.2.js"></script>
+<script src="/static/js/main.js"></script> <!-- Resource jQuery -->
+<script src="/static/js/jquery.blockUI.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    $('#demo6').click(function() {
+        $.blockUI({
+            centerY: 0,
+            css: { top: '10px', left: '30%', right: '' }
+        });
+
+        setTimeout($.unblockUI, 2000);
+    });
+
+
+
+    });
+
+function ToggleStatus() {
+ var toggleButton = document.getElementById('toggleButton');
+
+ if (document.getElementById('statusContainer').style.visibility == 'visible') {
+  toggleButton.value = 'Show';
+  document.getElementById('statusContainer').style.visibility = 'hidden';
+ }
+ else {
+  toggleButton.value = 'Hide';
+  document.getElementById('statusContainer').style.visibility = 'visible';
+ }
+}
+
+
+$("form").submit(function(e){
+
+
+              e.preventDefault();
+              var files = document.getElementById("file_id").files;
+              var formdata = new FormData();
+              for(var i = 0; i< files.length; i++){
+                  formdata.append('file_upload', files[i]);
+                }
+                var op = $(this).find("input[type=submit]:focus").attr('name');
+                formdata.append('op',op);
+               $.ajax({
+                 url:"/myapp/ajupload/",
+                 type:"post",
+                 dataType:"json",
+                 data:formdata,
+                 contentType: false,
+                 cache: false,
+                 processData:false,
+                 error:function(e){
+                   console.log("error");//error
+                 },
+                 success:function() {
+                   //do whatever on success.
+                   console.log("success");
+                 }
+               });
+
+  });
+
+
+
+
+
+
+
+
+
+</script>

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<!--<div style="float:left;width:300px;max-width:300px;" id="fileSelectionPanel">
+		  <ul class="filesList">
+ {% for file in file_name %}
+    <li><a  id="{{file}}" onclick='canvasImage($(this));' src="{% static 'images'%}{{ path }}{{file}}" data-name="{{file}}" class="btn btn-default btn-xs" >{{ file }}</a> </li>
+    
+  {% endfor %}
+</ul>
+		
+        
+</div>
+-->
+<input type = "text" id = "file_id" >
+<button id = 'btn' >click to view</button>
+<script type = "text/javascript">
+function canvasImage(e){
+
+    }
+    $('#btn').click(function(event) {
+       // var imgName = $("#file_id").val().split('/').pop().split('\\').pop();
+    //var imgName = $("#file_id").val();
+    var imgName = { }; 
+    url = $( "#file_id" ).val();
+    imgName = url.split( ";" );
+    var data = '';
+    $.each( imgName, function( index, name ) {
+        data += 'image[]=' + name + '&';
+    });
+    console.log( data );
+    imgName = JSON.stringify( imgName );
+    $.ajax({
+                        url : "image_api", 
+                        type : "POST",
+                        dataType: "json", 
+                        data : data,
+                            success : function(data) {
+                                /*$.each( data.tags, function( imgname, tags ){
+                                    
+                                    var w = Math.abs(tags.r - tags.l);
+                                    var h = Math.abs(tags.t - tags.b);
+                                    var l =  parseInt(tags.l)+300;
+                                    //console.log(tags.count);
+                                    //$("#tags_count").html(tags.count);
+                                    //$(".label label-default").val(tags.count);
+                                    
+                                    //spanTags(h,w,tags.t,l,44, 'Orange');*/
+                                },
+                               // $('#result').append( 'Server Response: ' + json.server_response);
+                            
+                            error : function(xhr,errmsg,err) {
+                                //alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+});
+</script>
+{% endblock%}

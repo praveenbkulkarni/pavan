@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="{% url 'select_image' %}" method="post" >
+            {% csrf_token %}
+            <p><input class="btn btn-default btn-sm" type="submit" value="Train" name="train"/></p>
+            <p><input class="btn btn-default btn-sm" type="submit" value="Test" name="test"/></p>
+        </form>
+
+  
+
+<p><a class="btn btn-default btn-sm" href="{% url "create_svm" %}">Knowledge Base</a></p>
+<p><a class="btn btn-default btn-sm" href="{% url "demo" %}">Geotagged Visibility</a></p>
+
+
+{% endblock  %}
+
+

@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% block title %}Companies{% endblock %}
+{% block content %}
+<h1 style="padding:1%;">Companies<a id="cmp" data-show="{{ a_show }}" class="btn btn-default btn-sm" data-toggle="modal" href="{% url 'company_new' %}" data-target="#addCompany"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></h1>
+<div id="Table-container">
+<table style="width:50%" class="table">
+    {% for company in object_list %}
+     <tr><th>
+    <h4><a style="color: orange;" href="{% url "brand_list" company.id%}">{{ company.name }}</a></h4> </th></tr>
+    {% endfor %}
+</table>
+</div>
+<!-- Add Company Form-->
+<div id="addCompany" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<script type="text/javascript">
+
+$( document ).ready(function() {
+
+var a_show = $('#cmp').attr("data-show");
+if (a_show == 'ashow' )
+    {
+        $('#cmp').show();
+        $('#cmp').hide();
+    }
+    else
+    {
+        $('#cmp').hide();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+ - Remove extra div at the bottom
+
+ - Find the element from which the extra padding is coming
+
+ - On SVM change, the tags should auto reload. Use onchange and call the method to fetch tags
+ - On the left list use the following classes
+ text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;`1
+
+- add gap between dropdown and upload link
+
+- The hover color of "Upload Image" needs to be changed
+
+- Use ajaxsetup to show gmail style loading message.
+
+- Fetch the list on the left using ajax
+
+- change title of pages

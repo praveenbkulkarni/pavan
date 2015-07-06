@@ -1,0 +1,214 @@
+BEGIN;
+-- phpMyAdmin SQL Dump
+-- version 3.4.10.1deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: May 04, 2015 at 05:53 PM
+-- Server version: 5.5.41
+-- PHP Version: 5.3.10-1ubuntu3.15
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `myapp`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `brands`
+--
+
+CREATE TABLE IF NOT EXISTS `brands` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `colorname` varchar(20) NOT NULL,
+  `colorval` varchar(7) NOT NULL,
+  `heatmapcolor` varchar(20) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `isactive` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `buckets`
+--
+
+CREATE TABLE IF NOT EXISTS `buckets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `companies`
+--
+
+CREATE TABLE IF NOT EXISTS `companies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `erp_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `imagetypes`
+--
+
+CREATE TABLE IF NOT EXISTS `imagetypes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `isactive` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `myapp_document`
+--
+
+CREATE TABLE IF NOT EXISTS `myapp_document` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `docfile` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=323 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `myapp_users`
+--
+
+CREATE TABLE IF NOT EXISTS `myapp_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paths`
+--
+
+CREATE TABLE IF NOT EXISTS `paths` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `train_path` varchar(255) NOT NULL,
+  `test_path` varchar(255) NOT NULL,
+  `demo_path` varchar(255) NOT NULL,
+  `svm_name` varchar(50) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pictures`
+--
+
+CREATE TABLE IF NOT EXISTS `pictures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `picture_name` varchar(50) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `bucket_id` int(11) NOT NULL,
+  `picturetable_id` int(11) NOT NULL,
+  `imagetype_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=235 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `picturetables`
+--
+
+CREATE TABLE IF NOT EXISTS `picturetables` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tablename` varchar(50) NOT NULL,
+  `alias` varchar(50) NOT NULL,
+  `column` int(11) NOT NULL,
+  `jsonpath` varchar(20) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `isactive` int(11) NOT NULL,
+  `fetchstartdate` datetime NOT NULL,
+  `fetchenddate` datetime NOT NULL,
+  `fetchtime` datetime NOT NULL,
+  `company_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `top` int(11) NOT NULL,
+  `left` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `picture_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=402 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `trainingtags`
+--
+
+CREATE TABLE IF NOT EXISTS `trainingtags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `top` int(11) NOT NULL,
+  `left` int(11) NOT NULL,
+  `width` int(11) NOT NULL,
+  `hight` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `picture_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+COMMIT;

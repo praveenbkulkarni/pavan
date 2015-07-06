@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+    <!-- List of uploaded documents  
+    {% if documents %}
+        <ul>
+        {% for document in documents %}
+            <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents.</p>
+    {% endif %}-->
+    
+        <form action="{% url 'upload_img' brands.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+            <p><input class="btn btn-default btn-sm" type="submit" value="Upload to train" name="train"/></p>
+            <p><input class="btn btn-default btn-sm" type="submit" value="Upload to test" name="test"/></p>
+            <p><input class="btn btn-default btn-sm" type="submit" value="Upload to demo" name="demo"/></p>
+        </form>
+       
+{% endblock %}

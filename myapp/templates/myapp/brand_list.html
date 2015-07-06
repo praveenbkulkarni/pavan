@@ -1,0 +1,471 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Brands{% endblock %}
+{% block content %}
+<style type="text/css">
+
+.modal-title{
+  text-transform: uppercase;
+}
+
+.glyphicon.glyphicon-cloud-upload{
+    font-size: 150px;
+}
+
+.glyphicon.glyphicon-plus{
+    font-size: 15px;
+}
+
+.text-button
+{
+        background-color: Transparent;
+        color: black;
+        border:0;
+
+}
+
+.btolink {
+     background-color: Transparent;
+     background:none!important;
+     border:none;
+     padding:0!important;
+     font: inherit;
+
+     cursor: pointer;
+}
+
+#Table{
+  border-radius: 0px;
+  height: 33px;
+  width: 168px;
+  margin-left: 10px;
+  display:inline;
+  padding: 0px;
+  padding-left: 10px;
+  color: black;
+}
+
+#serverUpload {
+  border-radius: 0;
+  width: 140px;
+  height: 33px;
+  margin-left: 6px;
+  display:inline;
+  padding: 0px;
+  padding-left: 10px;
+  color: black;
+}
+
+#selectHolder {
+  padding:8px;
+}
+
+h3 {
+  padding: 10px;
+  margin: -2px;
+}
+
+#progressbar{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/*.ui-widget-header {
+        background-image: none !important;
+        background-color: #FF0000 !important; //Any colour can go here
+    }*/
+</style>
+
+<h1 style="padding:1%;">Brands<a class="btn btn-default btn-sm" data-toggle="modal" href="{% url 'brand_new' pk %}" data-target="#addBrand"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></h1>
+<div id="Table-container">
+<table style="width:50%" class="table">
+     <!--   <tr>
+        <th>
+
+            <a class="btn btn-default btn-sm" href="{% url "brand_new" pk %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Create New</a>
+
+        </th>
+    </tr>-->
+
+    <tr>
+        {% for brand in object_list %}
+
+        <th><a style="color: orange;" data-toggle="modal" href="{% url "brand_edit" brand.id   %}" data-target="#editBrand" onclick = "getEditUrl($(this));">{{ brand.name }}</a> </th>
+
+
+
+        <!--<th>
+            <a class="btn btn-default btn-sm" href=" " >Upload_image</a>
+        </th>-->
+        <th>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Upload To <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <!-- button for outer upload -->
+                        <a  data-toggle="modal" data-target="#upLoad" data-name="{{brand.name}}" data-id="{{brand.id}}" onclick="changeBrand($(this));">Upload From Server</a>
+                    </li>
+                    <li>
+                        <a  data-toggle="modal" data-target="#myModal" data-name="{{brand.name}}" data-id="{{brand.id}}" onclick="changeBrand($(this));"  >Upload From Computer</a>
+
+                    </li>
+                </ul>
+            </div>
+        </th>
+           <!--<th>
+            <a class="btn btn-default btn-sm" href="{% url "operate"  %}">operation</a>
+        </th>-->
+        <!--<input type="button" name="utrain" value="upload to train" onclick="utrain();"></input>
+        <input type="button" name="utest" value="upload to test" onclick="utest();"></input>
+        <input type="button" name="udemo" value="upload to demo" onclick="udemo();"></input>
+        <input type="button" name="svm" value="create svm" onclick="svm();"></input>
+        <input type="button" name="demo" value="demo" onclick="demo();"></input>-->
+        <th><a class="btn btn-default btn-sm" href="{% url "commondownload" brand.id %}">Images</a></th>
+           <th><div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >Operations <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+
+                <li><a href="{% url 'select_image' brand.id 'train' %}">Train </a><li>
+                 <li><a href="{% url 'select_image' brand.id 'test'  %}">Test </a><li>
+
+                <li><a  href="{% url "demo" brand.id %}" >Demo</a></li></th>
+            </ul>
+            </div>
+        <th><p><a class="btn btn-default btn-sm" data-toggle="modal" data-target="#svm" href="{% url "create_svm" brand.id %}"  >Create svm</a></p></th>
+        <th>
+            <a class="btn btn-danger btn-sm " href="{% url "brand_delete" brand.id %}">delete</a>
+        </th>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+<!--
+<a href="{% url "brand_new" pk %}">New</a>
+
+<p>
+<a href="{% url "operate"  %}">operation</a>
+</p>
+-->
+<!-- Button trigger modal -->
+
+<!-- Modal to upload image from computer-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" id="ufcclose" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+      <div class="modal-body">
+        <form id="upfrm"  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="fileinput">
+                <input type="file" id="imgupload" multiple="true" name="docfile" required>
+            </div>
+            <p><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true" id="train" style="color:#CC0000; "></span>
+            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true" id="test" style="color:#FF9966;margin-left: 45px;"></span>
+            <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true" id="demo" style="color:#99CCCC;margin-left: 45px;
+margin-right: 10px;"></span></p>
+            <p >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="color:#CC0000;margin-left: 10px;" class="btn btn-default btn-sm" type="submit" value="Upload to train" name="train"></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="color:#FF9966; margin-left: 55px;" class="btn btn-default btn-sm" type="submit" value="Upload to test" name="test"></input>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input style="color:#99CCCC; margin-left: 57px;" class="btn btn-default btn-sm" type="submit" value="Upload to demo" name="demo"></input></p>
+        </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal to upload image from server -->
+<div class="modal fade" id="upLoad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel1"></h4>
+      </div>
+      <div id="#modalh3">
+        <h3  > Import Images From Bizom</h3>
+      </div>
+      <!--Report Range-->
+  <div id="selectHolder">
+
+          <div id="reportrange" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                <i style="color:black;" class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                <span style="color:black;"></span><b class="caret" ></b>
+          </div>
+
+        <!--uploat from server-->
+            <!-- <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Upload To <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li> <a href="#">Test</a></li>
+                <li><a href="#">Train</a></li>
+                <li><a href="#">Demo</a></li>
+            </ul> -->
+        <span>
+          <select class="form-control" id = "Table" >
+              <option value='activitypictures'>Activity pictures</option>
+              <option value='activityformdatas'>Activity Formdatas</option>
+          </select>
+        </span>
+
+        <span>
+            <select class="form-control" id = "serverUpload" >
+                <option value='test'>Test</option>
+                <option value='train'>Train</option>
+                <option value='demo'>Demo</option>
+            </select>
+        </span>
+
+  </div>
+  <div>
+    <span id="count" style="margin-left: 10px;"></span>
+  </div>
+  <div id="progressbar" ></div>
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary btn-sm" onclick = 'getPicutres()'>Fetch Images</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add Brand Form-->
+<div id="addBrand" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- Edit Brand Form-->
+<div id="editBrand" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<!-- create svm Form-->
+<div id="svm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- Gmail Like Loding -->
+<div id="statusContainer" style="visibility: hidden;">
+  <div id="statusMessageContainer">Loading...</div>
+</div>
+
+<!-- Add new Brand url -->
+<input type="hidden" id="brandUrl" data-url="{% url 'brand_new' pk%}">
+<input type="hidden" id="branEditUrl" ></input>
+<input type="hidden" id="fromdate"></input>
+<input type="hidden" id="todate"></input>
+<input type="hidden" id="currentPk"></input>
+<input type="hidden" id="domainname" value="{{ domainname }}"></input>
+
+
+
+
+<!--scripting-->
+<script type="text/javascript">
+
+var count = { x:0 };
+    /* Change form action of create brand */
+    $('#addBrand').click(function(){
+            var url=$('#brandUrl').attr('data-url');
+            $('#newBrand').attr('action',url);
+            $("#frmbtn").click(function() {
+            $("#newBrand").submit();
+       });
+    });
+
+
+    function getEditUrl(e) {
+      var url = $(e).attr('href');
+      $("#branEditUrl").val(url);
+    }
+
+    $('#editBrand').click(function(){
+                var url = $('#branEditUrl').val();
+                $('#brandEdit').attr('action',url);
+                $("#brandEditFrmBtn").click(function() {
+                $("#brandEdit").submit();
+           });
+      });
+
+          $('#svm').on('hidden.bs.modal', function () {
+            location.reload(true);
+          });
+
+        $('#editBrand').on('hidden.bs.modal', function () {
+          location.reload(true);
+        });
+
+
+
+    //$('#upLoad').click(function(){$('#upLoad').modal('hide');});
+    //$('#ufcclose').click(function(){$('#upLoad').modal('show');});
+    //$('#smClose').click(function(){$('#upLoad').modal('show');});
+    $("#fileinput").hide();
+    $('#train').click(function(){ $('#imgupload').trigger('click'); });
+    $('#test').click(function(){ $('#imgupload').trigger('click'); });
+    $('#demo').click(function(){ $('#imgupload').trigger('click'); });
+
+    function changeBrand(e){
+        id = $(e).attr('data-name');
+        var url = $(e).attr('data-id');
+        $("#currentPk").val(url);
+        console.log(url);
+        $('#upfrm').attr('action','/myapp/upload/'+url);
+        $("#myModalLabel").html(id);
+        $("#myModalLabel1").html(id);
+
+    }
+
+ $(function() {
+
+    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+    $('#fromdate').val(moment().subtract(29, 'days').format('YYYY-MM-DD'));
+    $('#todate').val(moment().format('YYYY-MM-DD'));
+    $('#reportrange').daterangepicker({
+        format: 'DD/MM/YYYY',
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
+        minDate: '01/01/2012',
+        maxDate: '31/12/2020',
+        dateLimit: { days: 60 },
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: true,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        opens: 'center',
+        drops: 'down',
+        buttonClasses: ['btn', 'btn-sm'],
+        applyClass: 'btn-primary',
+        cancelClass: 'btn-default',
+        separator: ' to ',
+        locale: {
+            applyLabel: 'Submit',
+            cancelLabel: 'Cancel',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        }
+    }, function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#fromdate').val(start.format('YYYY-MM-DD'));
+        $('#todate').val(end.format('YYYY-MM-DD'));
+    });
+
+
+});
+
+function getPicutres(pageNo){
+  $("#statusMessageContainer").show();
+  var todate = $('#todate').val();
+  var fromdate = $('#fromdate').val();
+  var uploadto = $('#serverUpload').val();
+  var pk = $("#currentPk").val();
+  var domainName = $("#domainname").val();
+  var tableName = $("#Table").val();
+  
+  if (pageNo == null) {
+    var pageno = 1;
+  } else {
+      console.log(pageNo)
+    var pageno = pageNo;
+  }
+    
+  url = "http://"+domainName+".bizom.in/activities/getPictures?&fromdate="+fromdate+"&todate="+todate+"&pageno="+pageno+"&limit=5&tableName="+tableName;
+  $.getJSON(url,function( data ){
+      bucket = data[ 'data' ][ 'bucket' ];
+      count.x = data[ 'data' ][ 'count' ];
+      images = [];
+      Array_images = data[ 'data' ][ 'pictures' ];
+      $.each( Array_images, function( key, image ){
+            images.push(image[ 'img_name' ]);
+      });
+      console.log("inside "+count.x);
+      console.log(images);
+      len = images.length;
+      var counter = 0;
+      getData();
+      console.log(counter);
+
+      function getData()
+      {
+          $("#statusMessageContainer").show();
+          document.getElementById('statusContainer').style.visibility = 'visible';
+          var image = { 'image' : bucket+images[counter], 'imageName' : images[counter], 'count' : len, 'ival' : counter+1 };
+          image = JSON.stringify( image );
+          $.ajax({
+              url:"/myapp/s3download/"+pk+"/"+uploadto,
+              type:'POST',
+              dataType: 'json',
+              async: true,
+              data:{
+                image : image,
+                csrfmiddlewaretoken : '{{ csrf_token }}'
+              },
+              success:function(data){
+                $("#statusMessageContainer").hide();
+                  data = len - data;
+                  progress = ( data/len )*100;
+                  $( "#progressbar" ).progressbar({
+                      value: progress
+                  });
+                  $('#count').html(" Fetching "+data+" Off "+len+" Images");
+                  counter++;
+                  console.log(pageno);
+                  if (counter < len ) getData();
+
+              },
+              error:function(e){
+                  console.log(e);
+              },
+
+          });
+     
+      }
+	
+  });
+    
+}
+
+
+    </script>
+{% endblock content%}
+

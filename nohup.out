@@ -1,0 +1,603 @@
+/var/sites/thirdauth/myapp/forms.py:6: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form CompayForm needs updating
+  class CompayForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:10: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandForm needs updating
+  class BrandForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:21: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandEditForm needs updating
+  class BrandEditForm(forms.ModelForm):
+
+[01/Jun/2015 17:44:34] "GET /myapp/Home HTTP/1.1" 200 3878
+[01/Jun/2015 17:44:36] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 17:44:37] "GET /myapp/edit/9 HTTP/1.1" 200 1900
+[01/Jun/2015 17:45:13] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 17:45:13] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/css/daterangepicker-bs3.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/css/common.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/js/moment.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/js/daterangepicker.js HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 17:45:13] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 17:45:14] "GET /myapp/edit/6 HTTP/1.1" 200 1897
+[01/Jun/2015 17:45:18] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 17:45:18] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 17:45:18] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 17:45:21] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 01, 2015 - 17:44:20
+Django version 1.7.6, using settings 'thirdauth.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+91
+{'a_show': 'ashow', 'object_list': [<Companies: Companies object>, <Companies: Companies object>, <Companies: Companies object>, <Companies: Companies object>]}
+Parle Agro
+Parle Agro
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics43101425459396.jpg
+Number of Objects detected: 0
+/var/sites/thirdauth/myapp/forms.py:6: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form CompayForm needs updating
+  class CompayForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:10: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandForm needs updating
+  class BrandForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:21: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandEditForm needs updating
+  class BrandEditForm(forms.ModelForm):
+
+[01/Jun/2015 17:46:08] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 17:46:08] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 17:46:08] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 17:46:55] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 17:46:55] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:55] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 17:46:56] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 17:46:56] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 17:47:01] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:47:02] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:47:04] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:47:06] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:47:09] "GET /myapp/edit/7 HTTP/1.1" 200 1898
+[01/Jun/2015 17:47:13] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 17:47:13] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 17:47:15] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 113
+[01/Jun/2015 17:47:17] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:48:54] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:49:09] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 2096
+[01/Jun/2015 17:49:58] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 17:49:59] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 01, 2015 - 17:45:47
+Django version 1.7.6, using settings 'thirdauth.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics43101425459396.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics46301425201928.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics41001425200999.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10987680_427059044126438_1824080286378230844_n.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics62301425199846.jpg
+Number of Objects detected: 1
+Detection 0: Left: 166 Top: 233 Right: 178 Bottom: 271
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics67401425368298.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics68501425455804.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics72901425382546.jpg
+Number of Objects detected: 20
+Detection 0: Left: 271 Top: 354 Right: 292 Bottom: 420
+Detection 1: Left: 312 Top: 358 Right: 333 Bottom: 424
+Detection 2: Left: 198 Top: 353 Right: 215 Bottom: 409
+Detection 3: Left: 232 Top: 357 Right: 250 Bottom: 412
+Detection 4: Left: 267 Top: 222 Right: 284 Bottom: 277
+Detection 5: Left: 237 Top: 222 Right: 251 Bottom: 268
+Detection 6: Left: 205 Top: 222 Right: 219 Bottom: 268
+Detection 7: Left: 127 Top: 225 Right: 142 Bottom: 271
+Detection 8: Left: 150 Top: 107 Right: 165 Bottom: 153
+Detection 9: Left: 179 Top: 222 Right: 193 Bottom: 268
+Detection 10: Left: 132 Top: 346 Right: 149 Bottom: 402
+Detection 11: Left: 298 Top: 219 Right: 315 Bottom: 274
+Detection 12: Left: 163 Top: 345 Right: 184 Bottom: 412
+Detection 13: Left: 234 Top: 95 Right: 248 Bottom: 142
+Detection 14: Left: 205 Top: 98 Right: 219 Bottom: 144
+Detection 15: Left: 265 Top: 93 Right: 280 Bottom: 139
+Detection 16: Left: 336 Top: 215 Right: 353 Bottom: 270
+Detection 17: Left: 124 Top: 110 Right: 139 Bottom: 156
+Detection 18: Left: 333 Top: 80 Right: 350 Bottom: 136
+Detection 19: Left: 357 Top: 360 Right: 374 Bottom: 416
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics61901425624794.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics63901425194918.jpg
+Number of Objects detected: 0
+/var/sites/thirdauth/myapp/forms.py:6: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form CompayForm needs updating
+  class CompayForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:10: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandForm needs updating
+  class BrandForm(forms.ModelForm):
+
+/var/sites/thirdauth/myapp/forms.py:21: RemovedInDjango18Warning: Creating a ModelForm without either the 'fields' attribute or the 'exclude' attribute is deprecated - form BrandEditForm needs updating
+  class BrandEditForm(forms.ModelForm):
+
+[01/Jun/2015 18:00:23] "GET /myapp/select/6/train HTTP/1.1" 200 22761
+[01/Jun/2015 18:00:23] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:00:23] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 18:03:52] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:03:52] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 18:03:52] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:04:19] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:04:20] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:04:41] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:04:44] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/wsgiref/handlers.py", line 86, in run
+    self.finish_response()
+  File "/usr/lib/python2.7/wsgiref/handlers.py", line 127, in finish_response
+    self.write(data)
+  File "/usr/lib/python2.7/wsgiref/handlers.py", line 210, in write
+    self.send_headers()
+  File "/usr/lib/python2.7/wsgiref/handlers.py", line 268, in send_headers
+    self.send_preamble()
+  File "/usr/lib/python2.7/wsgiref/handlers.py", line 192, in send_preamble
+    'Date: %s\r\n' % format_date_time(time.time())
+  File "/usr/lib/python2.7/socket.py", line 324, in write
+    self.flush()
+  File "/usr/lib/python2.7/socket.py", line 303, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 32] Broken pipe
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/SocketServer.py", line 582, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python2.7/SocketServer.py", line 323, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/local/lib/python2.7/dist-packages/django/core/servers/basehttp.py", line 129, in __init__
+    super(WSGIRequestHandler, self).__init__(*args, **kwargs)
+  File "/usr/lib/python2.7/SocketServer.py", line 640, in __init__
+    self.finish()
+  File "/usr/lib/python2.7/SocketServer.py", line 693, in finish
+    self.wfile.flush()
+  File "/usr/lib/python2.7/socket.py", line 303, in flush
+    self._sock.sendall(view[write_offset:write_offset+buffer_size])
+error: [Errno 32] Broken pipe
+[01/Jun/2015 18:06:01] "GET /myapp/select/7/train HTTP/1.1" 200 22422
+[01/Jun/2015 18:06:03] "GET /static/images/companies/Parle%20Agro/xyz/train/pics40401425455508.jpg HTTP/1.1" 304 0
+[01/Jun/2015 18:06:05] "GET /static/images/companies/Parle%20Agro/xyz/train/pics39801425630005.jpg HTTP/1.1" 304 0
+[01/Jun/2015 18:06:06] "GET /static/images/companies/Parle%20Agro/xyz/train/pics41001425200999.jpg HTTP/1.1" 304 0
+[01/Jun/2015 18:06:10] "GET /myapp/select/6/train HTTP/1.1" 200 22761
+[01/Jun/2015 18:06:18] "GET /myapp/create/6 HTTP/1.1" 200 1284
+[01/Jun/2015 18:06:22] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:06:22] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:06:24] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:06:26] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:06:27] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:06:30] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:06:34] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:16:04] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:16:04] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 18:16:04] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 18:16:05] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 18:16:05] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:16:38] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:16:40] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 01, 2015 - 18:00:21
+Django version 1.7.6, using settings 'thirdauth.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics41001425200999.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics41001425200999.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics39801425630005.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10354943_1620896174795634_7835392122253588421_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics40401425455508.jpg
+Number of Objects detected: 0
+----------------------------------------
+Exception happened during processing of request from ('127.0.0.1', 54968)
+----------------------------------------
+rel pathcompanies/Parle Agro/xyz/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/xyz/train
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics46401425201928.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics43101425459396.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10987680_427059044126438_1824080286378230844_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10354943_1620896174795634_7835392122253588421_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10630615_723522727684455_1585534236965534124_o.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10987680_427059044126438_1824080286378230844_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics39801425630005.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/im[01/Jun/2015 18:16:44] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:16:46] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:16:51] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:24:13] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:24:13] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 18:24:13] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:24:16] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:24:18] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:24:19] "POST /myapp/result/6/ruslan_05_23_10_23.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:24:21] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 18:24:23] "GET /myapp/select/6/train HTTP/1.1" 200 22761
+[01/Jun/2015 18:24:54] "GET /myapp/Home HTTP/1.1" 200 3878
+[01/Jun/2015 18:25:23] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 18:25:25] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:25:25] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:25:49] "GET /myapp/select/6/train HTTP/1.1" 200 22761
+[01/Jun/2015 18:26:48] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:26:48] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:27:08] "GET /myapp/select/6/train HTTP/1.1" 200 22760
+[01/Jun/2015 18:27:51] "GET /myapp/select/6/train HTTP/1.1" 200 22760
+[01/Jun/2015 18:27:51] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 18:27:51] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:27:51] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:27:51] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:27:51] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:27:51] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:27:51] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 18:27:51] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:27:51] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:28:21] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 18:28:21] "GET /static/css/common.css HTTP/1.1" 200 308
+[01/Jun/2015 18:28:21] "GET /static/css/daterangepicker-bs3.css HTTP/1.1" 200 6767
+[01/Jun/2015 18:28:21] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:28:21] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:28:21] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:28:21] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:28:21] "GET /static/js/moment.min.js HTTP/1.1" 200 34737
+[01/Jun/2015 18:28:21] "GET /static/js/daterangepicker.js HTTP/1.1" 200 53679
+[01/Jun/2015 18:28:21] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:28:21] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:28:22] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:28:24] "GET /myapp/demo/6 HTTP/1.1" 200 16299
+[01/Jun/2015 18:28:24] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:28:24] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:28:24] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:28:24] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:28:24] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 18:28:24] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:28:24] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 18:28:24] "GET /static/css/style.css HTTP/1.1" 200 8530
+[01/Jun/2015 18:28:24] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:28:24] "GET /static/js/modernizr.js HTTP/1.1" 200 51351
+[01/Jun/2015 18:28:24] "GET /static/js/main.js HTTP/1.1" 200 417
+[01/Jun/2015 18:28:24] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:28:24] "GET /fetch/6/demo HTTP/1.1" 200 504
+[01/Jun/2015 18:28:51] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 18:28:51] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:28:51] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:28:51] "GET /static/css/daterangepicker-bs3.css HTTP/1.1" 200 6767
+[01/Jun/2015 18:28:51] "GET /static/css/common.css HTTP/1.1" 200 308
+[01/Jun/2015 18:28:51] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:28:51] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:28:51] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:28:51] "GET /static/js/moment.min.js HTTP/1.1" 200 34737
+[01/Jun/2015 18:28:51] "GET /static/js/daterangepicker.js HTTP/1.1" 200 53679
+[01/Jun/2015 18:28:51] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:28:51] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:28:53] "GET /myapp/select/6/train HTTP/1.1" 200 22760
+[01/Jun/2015 18:28:53] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 18:28:53] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:28:53] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:28:53] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:28:53] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 18:28:53] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:28:53] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:28:53] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:28:53] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:31:41] "GET /myapp/select/6/train HTTP/1.1" 200 22786
+[01/Jun/2015 18:31:41] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 18:31:41] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 18:31:41] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 18:31:41] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 18:31:41] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 18:31:41] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 18:31:41] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 18:31:41] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 18:31:41] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 18:31:50] "GET /myapp/create/6 HTTP/1.1" 200 1284
+[01/Jun/2015 18:32:10] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 18:32:10] "GET /static/css/daterangepicker-bs3.css HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/css/common.css HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/js/moment.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/js/daterangepicker.js HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 18:32:10] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 18:32:11] "GET /myapp/select/6/train HTTP/1.1" 200 22782
+[01/Jun/2015 18:47:11] "GET /myapp/demo/9 HTTP/1.1" 200 12425
+[01/Jun/2015 18:47:11] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 18:47:11] "GET /fetch/9/demo HTTP/1.1" 200 57
+[01/Jun/2015 18:47:17] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 18:47:17] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 18:47:20] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:47:31] "GET /myapp/select/6/train HTTP/1.1" 200 22782
+[01/Jun/2015 18:48:07] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 18:48:07] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 18:48:59] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 18:48:59] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 18:48:59] "GET /fetch/7/demo HTTP/1.1" 200 208
+Error: That port is already in use.
+[01/Jun/2015 18:50:17] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 113
+[01/Jun/2015 18:50:19] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 18:50:21] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+ages/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10354943_1620896174795634_7835392122253588421_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/10354943_1620896174795634_7835392122253588421_n.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics40401425455508.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics46401425201928.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics43101425459396.jpg
+Number of Objects detected: 0
+ruslan_05_23_10_23
+ruslan_05_23_10_23.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/LMN/svm/ruslan_05_23_10_23.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/LMN/demo/pics46301425201928.jpg
+Number of Objects detected: 0
+Parle Agro
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+91
+{'a_show': 'ashow', 'object_list': [<Companies: Companies object>, <Companies: Companies object>, <Companies: Companies object>, <Companies: Companies object>]}
+Parle Agro
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+Parle Agro
+Parle Agro
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+Parle Agro
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics67401425368298.jpg
+Number of Objects detected: 0
+rel pathcompanies/Parle Agro/LMN/train
+/var/sites/thirdauth/static/imagescompanies/Parle Agro/LMN/train
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics62301425199846.jpg
+Number of Objects detected: 1
+Detection 0: Left: 166 Top: 233 Right: 178 Bottom: 271
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics67401425368298.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics68501425455804.jpg
+Number of Objects detected: 0
+xyz_05_27_17_12
+xyz_05_27_17_12.svm
+/var/sites/thirdauth/static/images/companies/Parle Agro/xyz/svm/xyz_05_27_17_12.svm
+Processing file: /var/sites/thirdauth/static/images/companies/Parle Agro/xyz/demo/pics72901425382546.jpg
+Number of Objects detected: 20
+Detection 0: Left: 271 Top: 354 Right: 292 Bottom: 420
+Detection 1: Left: 312 Top: 358 Right: 333 Bottom: 424
+Detection 2: Left: 198 Top: 353 Ri[01/Jun/2015 18:50:23] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 2096
+[01/Jun/2015 19:52:35] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 19:52:35] "GET /static/js/jquery-ui.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/css/bootstrap.min.css HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/css/jquery-ui.css HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/css/reset.css HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/js/bootstrap.min.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/css/style.css HTTP/1.1" 200 8526
+[01/Jun/2015 19:52:35] "GET /static/js/main.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:35] "GET /static/js/modernizr.js HTTP/1.1" 304 0
+[01/Jun/2015 19:52:36] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 304 0
+[01/Jun/2015 19:52:36] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 19:52:39] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 19:52:41] "POST /myapp/result/7/xyz_05_27_17_12.svm HTTP/1.1" 200 12
+[01/Jun/2015 19:53:11] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 19:54:24] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 19:54:24] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 19:54:24] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 19:54:24] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 19:54:24] "GET /static/css/style.css HTTP/1.1" 200 8537
+[01/Jun/2015 19:54:24] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 19:54:24] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 19:54:24] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 19:54:24] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 19:54:24] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 19:54:24] "GET /static/js/modernizr.js HTTP/1.1" 200 51351
+[01/Jun/2015 19:54:24] "GET /static/js/main.js HTTP/1.1" 200 417
+[01/Jun/2015 19:54:24] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 19:54:24] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 19:54:31] "GET /myapp/demo/7 HTTP/1.1" 200 19245
+[01/Jun/2015 19:54:31] "GET /static/css/bootstrap-theme.min.css HTTP/1.1" 200 19963
+[01/Jun/2015 19:54:31] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 117305
+[01/Jun/2015 19:54:31] "GET /static/css/jquery-ui.css HTTP/1.1" 200 35212
+[01/Jun/2015 19:54:31] "GET /static/js/jquery-1.10.2.js HTTP/1.1" 200 273199
+[01/Jun/2015 19:54:31] "GET /static/js/jquery-1.11.2.min.js HTTP/1.1" 200 95931
+[01/Jun/2015 19:54:31] "GET /static/js/jquery-ui.js HTTP/1.1" 200 470596
+[01/Jun/2015 19:54:31] "GET /static/css/reset.css HTTP/1.1" 200 1094
+[01/Jun/2015 19:54:31] "GET /static/css/style.css HTTP/1.1" 200 8526
+[01/Jun/2015 19:54:31] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 35951
+[01/Jun/2015 19:54:31] "GET /static/js/main.js HTTP/1.1" 200 417
+[01/Jun/2015 19:54:31] "GET /static/js/modernizr.js HTTP/1.1" 200 51351
+[01/Jun/2015 19:54:31] "GET /static/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028
+[01/Jun/2015 19:54:31] "GET /fetch/7/demo HTTP/1.1" 200 208
+[01/Jun/2015 19:55:10] "GET /static/css/style.css HTTP/1.1" 304 0
+[01/Jun/2015 19:56:05] "GET /myapp/brand/2 HTTP/1.1" 200 30557
+[01/Jun/2015 19:56:10] "GET /myapp/select/6/train HTTP/1.1" 200 22782

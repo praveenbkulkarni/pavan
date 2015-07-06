@@ -1,0 +1,576 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Tag Images</title>
+<style>
+
+a{
+  color: #89ba2c!important;
+  text-decoration: none;
+}
+body{
+  overflow: hidden;
+}
+
+</style>
+<link rel="stylesheet" href="/static/css/reset.css">
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/jquery-ui.css">
+<link href="/static/css/common.css" rel="stylesheet">
+<script src="{% static 'js/jquery-1.11.2.min.js'%}"></script>
+<script src="/static/js/jquery-1.10.2.js"></script>
+<script src="/static/js/jquery-ui.js"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+</head>
+<body>
+<div>
+
+	<div class="list-group" style="float:left;width:300px;max-width:300px;" id="fileSelectionPanel" >
+        <ul class="filesList">
+            {% for file in file_name %}
+                <li class="list-group-item smallbox"><a  id="{{file}}" onclick='canvasImage($(this));' src="{% static 'images'%}{{ path }}{{file}}" data-name="{{file}}"  >{{ file }}</a> </li>
+            {% endfor %}
+        </ul>
+
+	</div>
+
+	<div style="float:left;width:800px;">
+		<div id="canvasDiv">
+			<canvas id="canvas" width="800px" height="600px"></canvas>
+		</div>
+	</div>
+
+	<div id="sidePanel" style="float:left;width: 200px;">
+        <p id="Orange_tag"></p>
+        <p>Height</p>
+        <input type="Number" id="height" value="" onkeyup="editTag()"/>
+        <p style="margin-top: 10px;">Width</p>
+        <input type="number" id="width" value="" onkeyup="editTag()"/>
+        <p style="margin-top: 10px;">Top</p>
+        <input type="number" id="top" value="" onkeyup="editTag()"/>
+        <p style="margin-top: 10px;">Left</p>
+        <input type="number" id="left" value="" onkeyup="editTag()"/>
+        <p><span class="badge" id="currentTag" style="padding:10px;font-weight:bold;" onclick="editTag()"></span></p>
+        <form method="post" name="example form" >{% csrf_token %}
+            <p><input class="btn btn-info btn-sm" id="save" type="button" value="Save Tags" onclick="saveTags(this);"></input></p>
+            <p><input class="btn btn-info btn-sm" id="resave" type="button" value="reSave Tags" onclick="saveTags(this);"></input></p>
+        </form>
+            <p> <a class = "btn btn-danger btn-sm" href = "{% url 'brand_list' cmp_id %}"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="color:white;"> Brand List </span></a> </p>
+        <form method = "post" id = "frm_upload" action = "/myapp/upload/{{ pk }}" enctype="multipart/form-data">{% csrf_token %}
+            <input style="width: 108px;" type="file" id = "file_id" multiple="true" name="docfile" accept=".jpg,.JPG,.jpeg,.JPEG" class = "btn btn-default btn-sm"required>
+            <div class="dropup">
+                <button style="margin-top: 10px;" class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to train" name="train" ></input></a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to test" name="test" ></input></a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to demo" name="demo" ></input></a></li>
+                </ul>
+            </div>
+        </form>
+	</div>
+  <input type="hidden" id="currentImg">
+  <input type = "hidden" id = "pk" value = "{{ pk }}">
+  <input type="hidden" id="file_path" value="{{ file_path }}">
+
+</div>
+<div id="dialog-confirm"></div>
+<script>
+
+ $("#file_id").change(function (e) {
+
+    var files = document.getElementById("file_id").files;
+    var ext,val = [];
+    for(var i = 0; i< files.length; i++)
+    {
+        console.log(files[i].name);
+        ext = files[i].name.match(/\.(.+)$/)[1];
+        ext = ext.toLowerCase();
+        if( ext == 'jpg' || ext == 'jpeg' || ext == 'png' ){
+            $('#file_id').attr('disabled', false);
+            }else{
+                //alert('This is not an allowed file type');
+                //console.log(e);
+                alert('This is not an allowed file type.');
+                this.value = '';
+                }
+        }
+    /*for (var i = 0; i < $(this).get(0).files.length; ++i) {
+    var ext = $(this).get(0).files[i].name.match(/\.(.+)$/)[1];
+    switch (ext.toLowerCase()) {
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'gif':
+            $('#file_id').attr('disabled', false);
+            break;
+
+        default:
+            alert('This is not an allowed file type.');
+            this.value = '';
+    }
+}*/
+console.log(val);
+
+});
+
+
+    $('#currentTag').hide();
+	var imgTagObject = {};
+    var i = 0;
+var
+    rect = {},
+    drag = false;
+
+var fillStyles = {
+	"Orange" : "#FF9A00",
+	"Red" : "#ED1B24",
+	"Blue" : "#183883",
+	"Yello" : "#FDF000",
+	"White" : "#F60001",
+};
+
+var currentColor = 'Orange',
+    currentTagId = ''
+;
+var cvas = '';
+function initDraw() {
+	cvas = document.getElementById('canvasDiv');
+    function setMousePosition(e) {
+        var ev = e || window.event; //Moz || IE
+        if (ev.pageX) { //Moz
+            mouse.x = ev.pageX + window.pageXOffset;
+            mouse.y = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+            mouse.x = ev.clientX + document.body.scrollLeft;
+            mouse.y = ev.clientY + document.body.scrollTop;
+        }
+    };
+
+    var mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+    };
+    var element = null;
+    var node = null;
+    cvas.onmousemove = function (e) {
+        setMousePosition();
+        if (element !== null) {
+            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+        }
+    }
+
+    cvas.onclick = function (e) {
+        if (element !== null) {
+			var imgName = $("#currentImg").val();
+            var path = $("#file_path").val();
+            var img_name = path+"/"+imgName;
+      			if( imgTagObject[ imgName ] == undefined ) imgTagObject[ imgName ] = {};
+      			if( imgTagObject[ imgName ][ currentColor ] == undefined ) imgTagObject[ imgName ][ currentColor ] = {};
+      			var x = element.style.left;
+      			x = x.replace(/[^0-9]/g,'');
+            $("#left").val(x);
+      			var y = element.style.top;
+      			y = y.replace(/[^0-9]/g,'');
+            $("#top").val(y);
+      			var w = element.style.width;
+      			w = w.replace(/[^0-9]/g,'');
+            $("#width").val(w);
+      			var h = element.style.height;
+      			h = h.replace(/[^0-9]/g,'');
+            $("#height").val(h);
+            tagId = element.id;
+			//imgTagObject[ imgName ][ currentColor ].push({'id':tagId,'l':x - 300,'t':y ,'w': w ,'h':h });
+            imgTagObject[ imgName ][ currentColor ][ tagId ]={'id':tagId,'l':x - 300,'t':y ,'w': w ,'h':h };
+            element = null;
+            cvas.style.cursor = "default";
+            i++;
+            img_count++;
+        } else {
+            $(".tagbox").css("border-width", "1px");
+            var imgName = $("#currentImg").val();
+            mouse.startX = mouse.x;
+            mouse.startY = mouse.y;
+            element = document.createElement('div');
+            node = document.createElement("span");
+            node1 = document.createElement("span");
+            node.className = 'badge';
+            //node1.className = 'badge';//'glyphicon glyphicon-remove';
+            node1.className = 'glyphicon glyphicon-remove';
+            node.className += ' glyphicon glyphicon-pencil';
+
+            node.id = "spn"+currentColor+i;
+            node1.id = "spndel"+currentColor+i;
+            node.innerHTML = " ";
+            //node1.innerHTML = currentColor+i;
+            element.className = currentColor;
+            element.className += ' tagbox';
+            element.id = currentColor+i;
+            document.getElementById("currentTag").innerHTML = element.id;
+            //element.innerHTML = element.id;
+            element.style.left = mouse.x + 'px';
+            element.style.top = mouse.y + 'px';
+            cvas.appendChild(element);
+            //$( "#" + currentColor+i ).css( "background-color", "rgba(255,0,0,0.5) " );
+            document.getElementById(currentColor+'_tag').appendChild(node);
+            document.getElementById("spn"+currentColor+i).appendChild(node1);
+            $("#spn"+currentColor+i).click(spanclickhandler);
+            $( "#spndel"+currentColor+i ).click(deleteTag);
+            cvas.style.cursor = "crosshair";
+            document.getElementById(currentColor+i).style.position = 'absolute';
+            $("#"+currentColor+i).resizable({resize: function(e, ui) {
+                        console.log(this.id);
+                        CurrentColor = 'Orange'
+                        $(".tagbox").css("border-width", "1px");
+                        $("#"+this.id).css("border-width", "3px");
+                        var h=ui.size.height;
+                        var w=ui.size.width;
+                        $("#height").val(h);
+                        $("#width").val(w);
+                        console.log(imgName+" "+CurrentColor+" "+this.id);
+                        imgTagObject[ imgName ][ CurrentColor ][this.id]["h"]=h;
+                        imgTagObject[ imgName ][ CurrentColor ][this.id]["w"]=w;
+
+                        }
+            });
+            $( "#"+currentColor+i ).draggable({drag: function(e , ui){
+                        CurrentColor = 'Orange'
+                        var left = ui.position.left;
+                        var top = ui.position.top;
+                        $("#left").val(left);
+                        $("#top").val(top);
+                        $(".tagbox").css("border-width", "1px");
+                        $("#"+this.id).css("border-width", "3px");
+                        imgTagObject[ imgName ][ currentColor ][this.id]["t"]=top;
+                        imgTagObject[ imgName ][ currentColor ][this.id]["l"]=left-300;
+
+
+
+      }});
+
+        }
+
+    }
+
+}
+
+
+
+
+function renderImage(file) {
+
+  // generate a new FileReader object
+  var reader = new FileReader();
+
+  // inject an image with the src url
+  reader.onload = function(event) {
+	the_url = event.target.result
+	$('#showthumbnail').append( "<div style='margin:5px;float:left;'><img class='thumb' data-name='" + file.name + "' onclick='canvasImage($(this));' src='"+the_url+"' /></div>" );
+	}
+
+  // when the file is read it triggers the onload event above.
+  reader.readAsDataURL(file);
+}
+
+$(document).ready( function() {
+	initDraw();
+  $("#height").keypress(function(event) {
+        return /\d/.test(String.fromCharCode(event.keyCode));
+    });
+    $("#width").keypress(function(event) {
+          return /\d/.test(String.fromCharCode(event.keyCode));
+      });
+      $("#top").keypress(function(event) {
+            return /\d/.test(String.fromCharCode(event.keyCode));
+        });
+        $("#left").keypress(function(event) {
+              return /\d/.test(String.fromCharCode(event.keyCode));
+          });
+
+});
+var img_count;
+function canvasImage( el ) {
+	//$(".glyphicon.glyphicon-star").hide();
+    $('.glyphicon.glyphicon-star').remove();
+    $("#canvasDiv").html( '<canvas id="canvas" width="800px" height="600px" ></canvas>' );
+	var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+	var src = $( el ).attr( 'src' );
+	var img = new Image();
+    img_count = 0;
+	img.src = src;
+	var width = img.width; // this will be 300
+	var height = img.height;
+
+	img.onload = function() {
+		//ctx.drawImage(img, img.width, img.height);
+		ctx.drawImage(img, 0,0);
+	};
+    var imgName = $(el).data("name");
+	$( "#currentImg" ).val( imgName );
+	//ctx.drawImage(img, width, height);
+	//delete imgTagObject[$(el).data("name")];
+	removeThumbHighlight();
+	addThumbHighlight( el );
+    $(".badge").hide();
+    star= document.createElement("span");
+    star.className = "glyphicon glyphicon-star";
+    document.getElementById(imgName).appendChild(star);
+   if( imgName in imgTagObject ) {
+        $.each( imgTagObject[imgName], function(key,tags ){
+            for(var tagId in tags ) {
+                var tag=tags[tagId];
+
+                //$.each( tag,function(v){
+                    spanTags(tag.h,tag.w,tag.t,tag.l+300,tag.id, key );
+
+                  //  });
+
+            }
+
+//imgTagObject["pics46401425201928.jpg"]["Orange"]["Orange0"]["h"]
+
+
+
+
+                        //console.log("image_data"+tags.toString());
+
+    });
+}/*
+
+    if( imgName in imgTagObject ) {
+        $.each( imgTagObject[imgName], function( color, tags ){
+            $.each( tags, function( tagIndex, tag ){
+                spanTags(tag.h,tag.w,tag.t,tag.l+300,tag.id, color );
+            });
+
+            //console.log("image_data"+tags.toString());
+        });
+    }*/
+}
+
+
+var strokeColor = fillStyles[ currentColor ];
+
+function changeColor( el ) {
+	var id = $( el ).attr( 'id' );
+	currentColor = id;
+	strokeColor = fillStyles[ currentColor ];
+	$( "#currentColor" ).html( $( el ).html() );
+}
+
+function saveTags(e) {
+	//var data = "data[tags]=" + JSON.stringify( imgTagObject );
+    var pk = $("#pk").val();
+    var sid = $(e).attr('id');
+    console.log(sid);
+    var data = JSON.stringify( imgTagObject );
+                    $.ajax({
+                        url : "/myapp/ajax/"+pk+"/"+sid,
+                        type : "POST",
+                        dataType: "json",
+                        data : {
+                            client_response : data,
+                            path: $("#file_path").val(),
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(data) {
+                                //location.reload();
+                                $('#result').append( 'Server Response: ' + json.server_response);
+                            },
+                            error : function(xhr,errmsg,err) {
+                              $("#dialog-confirm").html(xhr.status + ": " + xhr.responseText);
+                              $("#dialog-confirm").dialog({
+                                  resizable: false,
+                                  modal: true,
+                                  title: "Tags",
+                                  buttons: {
+                                    "Ok": function () {
+                                          $(this).dialog('close');
+                                      }
+                                  }
+                              });
+                                //alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+}
+
+function removeThumbHighlight() {
+	$("img").each( function() {
+		$(this).removeClass( 'thumbHighlight' );
+	})
+}
+
+function addThumbHighlight( el ) {
+	$( el ).addClass( 'thumbHighlight' );
+}
+
+function editTag(tid) {
+
+    var x,y,top,left,a1,a2,a3,a4;
+    var imgName = $("#currentImg").val();
+    tageditid = tid;
+
+    $(".tagbox").css("border-width", "1px");
+    $("#"+tageditid).css("border-width", "3px");
+
+    if(tid == null)
+    {
+        tageditid = document.getElementById("currentTag").innerHTML;
+        x = document.getElementById("height");
+        y = document.getElementById("width");
+        top = document.getElementById("top");
+        left = document.getElementById("left");
+
+    }
+    else
+    {
+        document.getElementById("currentTag").innerHTML=tid;
+        x = $("#"+tageditid).css("height"); //document.getElementById("height");
+        y = $("#"+tageditid).css("width"); //document.getElementById("width");
+        top = $("#"+tageditid).css("top"); //document.getElementById("top");
+        left = $("#"+tageditid).css("left"); //document.getElementById("left");
+        //console.log(tageditid);
+      //  var ival=tageditid.match(/\d+/g);
+        a1 = x.replace(/[A-Za-z$-]/g, "");
+        a2 = y.replace(/[A-Za-z$-]/g, "");
+        a3 = top.replace(/[A-Za-z$-]/g, "");
+        a4 = left.replace(/[A-Za-z$-]/g, "");
+        $("#height").val(parseInt(a1));
+        $("#width").val(parseInt(a2));
+        $("#top").val(parseInt(a3));
+        $("#left").val(parseInt(a4));
+       /* console.log(parseInt(a1));
+        console.log(imgName);
+        console.log(currentColor);
+        console.log(img_count);
+        console.log(imgTagObject);*/
+        imgTagObject[ imgName ][ currentColor ][tageditid]["h"]=a1;
+        imgTagObject[ imgName ][ currentColor ][tageditid]["w"]=a2;
+        imgTagObject[ imgName ][ currentColor ][tageditid]["t"]=a3;
+        imgTagObject[ imgName ][ currentColor ][tageditid]["l"]=a4-300;
+
+    }
+    x = document.getElementById("height");
+    y = document.getElementById("width");
+    top = document.getElementById("top");
+    left = document.getElementById("left");
+    $("#"+tageditid).css("border-width", "3px");
+    $("#"+tageditid).css("height", x.value);
+    $("#"+tageditid).css("width", y.value);
+    $("#"+tageditid).css("top", top.value + 'px');
+    $("#"+tageditid).css("left", left.value + 'px');
+    //var ival=tageditid.match(/\d+/g);
+    imgTagObject[ imgName ][ currentColor ][tageditid]["h"]=x.value;
+    imgTagObject[ imgName ][ currentColor ][tageditid]["w"]=y.value;
+    imgTagObject[ imgName ][ currentColor ][tageditid]["t"]=top.value;
+    imgTagObject[ imgName ][ currentColor ][tageditid]["l"]=left.value-300;
+
+    //console.log(imgName);
+    //imgTagObject["Agarwal Sweets 04-04-2015.jpg"]["Orange"][0]["h"]
+    //imgTagObject["id"]=tageditid;
+
+}
+function spanTags(height,width,top,left,id,color) {
+    if( typeof color == undefined ) {
+        color = currentColor;
+    }
+            var imgName = $("#currentImg").val();
+            element = document.createElement('div');
+            element.className = color;
+            element.className += ' tagbox';
+            element.id = id;
+            $("#spn"+id).show();
+            $("#spndel"+id).show();
+            document.getElementById("currentTag").innerHTML = element.id;
+            //element.innerHTML = id;
+            element.style.height = height + 'px';
+            element.style.width = width + 'px';
+            element.style.left = left + 'px';
+            element.style.top = top + 'px';
+            cvas.appendChild(element);
+            //$( "#" + id ).css( "background-color", "rgba(255,0,0,0.5) " );
+            document.getElementById(id).style.position = 'absolute';
+            $("#"+id).resizable({resize: function(e, ui) {
+                        $(".tagbox").css("border-width", "1px");
+                        $("#"+this.id).css("border-width", "3px");
+                        var h=ui.size.height;
+                        var w=ui.size.width;
+                         $("#height").val(h);
+                        $("#width").val(w);
+                        imgTagObject[ imgName ][ color ][id]["h"]=h;
+                        imgTagObject[ imgName ][ color ][id]["w"]=w;
+
+                        }
+            });
+            $( "#"+id ).draggable({drag: function(e , ui){
+                        $(".tagbox").css("border-width", "1px");
+                        $("#"+this.id).css("border-width", "3px");
+                        var left = ui.position.left;
+                        var top = ui.position.top;
+                        $("#left").val(left);
+                        $("#top").val(top);
+                        imgTagObject[ imgName ][ color ][id]["t"]=top;
+                        imgTagObject[ imgName ][ color ][id]["l"]=left-300;
+
+
+
+      }});
+
+ }
+
+
+var spanclickhandler = function () {
+    spanid = $(this).attr('id');
+    editid = spanid.substring(3);
+    editTag(editid);
+
+
+};
+
+var deleteTag = function(val){
+    id = $(this).attr('id');
+    id=id.substring(6);
+    $(".tagbox").css("border-width", "1px");
+    $("#"+id).css("border-width", "3px");
+    $("#dialog-confirm").html("Are you sure you want to delete?");
+    $("#dialog-confirm").dialog({
+        resizable: false,
+        modal: true,
+        title: "Detete Tag",
+        buttons: {
+            "Yes": function () {
+                $(this).dialog('close');
+                $("#spn"+id).hide();
+                var imgName = $("#currentImg").val();
+                delete imgTagObject[ imgName ][ 'Orange'][id];
+                var elem=document.getElementById(id).remove(elem);
+            },
+                "No": function () {
+                $(this).dialog('close');
+                return false;
+            }
+        }
+    });
+    return false;
+}
+
+
+
+</script>
+
+
+
+
+
+</body></html>

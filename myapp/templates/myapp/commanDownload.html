@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<style>
+    .relocator { 
+        width:100%; 
+        margin-top: 10px; 
+        height: auto; 
+        display: inline-block;
+    }
+
+    .relocator ul { 
+        list-style: none; 
+        margin: 0px; 
+        padding: 0px; 
+        height: auto; 
+        background-color:#2b3e50;
+    }
+
+    .relocator ul li {  
+        width:200px; 
+        height: 150px;  
+        overflow:hidden;  
+        position: relative;  
+        float: left;  
+        margin-left: 20px; 
+        margin-bottom: 15px;  
+        padding:0px; 
+        background: #ffffff; 
+        border: solid 2px; 
+        background-color:#2b3e50;
+    }
+
+    .relocator ul li a{ 
+        width:200px; 
+        height: 150px; 
+        overflow: hidden; 
+        display: block; 
+        position: relative; 
+    }
+
+    .title_bg { 
+        background: rgba(255,255,255,.7); 
+        padding: 5px;  
+        width:190px; 
+    }
+
+    #highlighter{  
+        background: rgba(255,255,255,.7); 
+    }
+
+    .title_txt{  
+        color: #ff6c00; 
+        text-decoration: none; 
+    }
+    
+    .hig_content{ 
+        text-decoration: none;  
+        color: #ff6c00;  
+        overflow: hidden; 
+        padding: 5px; 
+    }
+
+    a { 
+        text-decoration: none;  
+        color: #000;
+    }
+
+    #progressbar {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+
+    .force-overflow {
+        min-height: 45px;
+    }
+
+
+    #style-1::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgb(43,62,80);
+        border-radius: 10px;
+        background-color: #2b3e50;
+    }
+
+    #style-1::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: #2b3e50;
+    }
+
+    #style-1::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgb(43,62,80);
+        background-color: #555;
+    }
+    
+    #buttons > span {
+        margin-left:33%;
+    }
+</style>
+
+<link href="/static/css/blue.css" rel="stylesheet">
+<script src="/static/js/icheck.js"></script>
+
+<p align="center">Select images and send them to Train / Test / Demo </p>
+<div id="buttons" > 
+    <a class="btn btn-danger" href="{% url 'brand_list' cid %}"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Brand List</a>
+    <span>
+        <button class="btn btn-default" onclick="getCheckedValue(this);" id="train">train</button>
+        <button class="btn btn-default" id="test" onclick="getCheckedValue(this);">test</button>
+        <button class="btn btn-default" id="demo" onclick="getCheckedValue(this);">demo</button> 
+    </span>
+    <button class="btn btn-danger" id="delete" onclick="getCheckedValue(this);" style="float:right">Delete</button> 
+</div>
+<div class="relocator" id="relocator">
+<ul class = 'filesList' id="style-1">
+{% for file in file_name %}
+<li><input type="checkbox" class="css-checkbox" id="box{{ forloop.counter }}" name="box" value="{{ file }}"><label for="{{ file }}" name="{{ file }}" class="css-label lite-plus"></label><span data-img-url="{% static 'images'%}{{ path }}{{file}}" data-toggle="modal" data-target="#showImage" class="glyphicon glyphicon-zoom-in" style="float: right;cursor:pointer;" aria-hidden="true" ></span><a><img src="{% static 'images'%}{{ path }}{{file}}" width="300px" height="auto" data-title="White Clouds" data-desc="White Clouds" data-file="box{{ forloop.counter }}" onclick="check(this);" style="cursor:pointer;" /></a></li>
+{% endfor%}
+</ul>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="showImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <p>Press Esc to close</p>
+      </div>
+      <div class="modal-body">
+            <img src="" style="padding:1%">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <span id="count" style="margin-left: 10px;"></span>
+</div>
+
+<!-- Progress Bar-->
+<div id="progressbar"></div>
+
+<!-- Gmail Like Loading-->
+<div id="statusContainer" style="visibility: hidden;">
+  <div id="statusMessageContainer">Loading...</div>
+</div>
+
+<input type="hidden" id="brandId" value="{{ brand_id }}">
+
+<script type="text/javascript">
+
+    $('li span').click(function(e) {
+        $('#showImage img').attr('src', $(this).attr('data-img-url')); 
+    });
+
+    $(document).ready(function() {
+		$('#relocator').relocate({
+			title		: false,
+			highlight	: false,
+			direction	: "bottom",
+			speed		: 250,
+		});
+    });
+
+
+    function getCheckedValue(e) {
+        var images = []
+        var pk = $('#brandId').val();
+        $('input:checkbox[name=box]:checked').each(function() 
+            {
+                images.push($(this).val());
+            });
+        console.log(images);
+        len = images.length;
+        if ( len == 0 ) {
+            return false;
+        }
+        var counter = 0;
+        var uploadto = $(e).attr('id');
+        console.log(uploadto);
+        getData();
+        function getData() {
+              $("#statusMessageContainer").show();
+              document.getElementById('statusContainer').style.visibility = 'visible';
+              var image = { 'imageName' : images[counter], 'count' : len, 'ival' : counter+1 };
+              image = JSON.stringify( image );
+              $.ajax({
+                  url:"/myapp/copyImage/"+pk+"/"+uploadto,
+                  type:'POST',
+                  dataType: 'json',
+                  async: true,
+                  data:{
+                    image : image,
+                    csrfmiddlewaretoken : '{{ csrf_token }}'
+                  },
+                  success:function(data){
+                    $( "#statusMessageContainer" ).hide();
+                    console.log(data);
+                    data = len - data;
+                    progress = ( data/len ) * 100;
+                    $( "#progressbar" ).progressbar({
+                        value: progress
+                    });
+                    $( '#count' ).html("Fetching "+data+" Off "+len+" Images");
+                    counter++;
+                    if ( counter < len ) { getData();
+                    }
+                    else { 
+                        location.reload();
+                    }
+                  },
+                  error:function(e){
+                    console.log(e);
+                  },
+
+              });
+         
+        }
+
+    }
+
+    function check(e){
+        var checkId = $(e).attr('data-file');
+        if( $( '#'+checkId ).is(':checked') ) {
+            $('#'+checkId).prop('checked', false);
+        } else {
+            $('#'+checkId).prop('checked', true);
+        }
+    }
+    
+</script>
+
+{% endblock content%}

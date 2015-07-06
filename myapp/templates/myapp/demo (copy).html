@@ -1,0 +1,420 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://tatadocomo.bizom.in/activities/manualtagger -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>35 Hawk Tagger</title>
+<style>
+
+canvas {
+  display:block;
+ 
+}
+
+#showthumbnail {
+	height:93vh;
+	overflow-y:scroll;
+}
+ul.filesList {
+    border-right: 1px dashed grey;
+    height:100vh;
+    overflow-y:scroll;
+}
+ul.filesList > li {
+    list-style-type:none;
+} 
+
+
+.thumb {
+	padding:2px;
+	cursor:pointer;
+	max-width:100px; 
+	max-height:100px;
+}
+.thumbHighlight {
+	border:2px solid black;
+}
+.color {
+	padding:10px;
+	font-weight:bold;
+	color:white;
+	margin-bottom:10px;
+}
+.Orange {
+    border: 1px solid #FF9A00;
+    position: absolute;
+}
+.Red {
+    border: 1px solid #ED1B24;
+    position: absolute;
+}
+.Blue {
+    border: 1px solid #183883;
+    position: absolute;
+}
+.Yello {
+    border: 1px solid #FDF000;
+    position: absolute;
+}
+.White {
+    border: 1px solid white;
+    position: absolute;
+}
+</style>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/jquery-ui.css">
+<script src="{% static 'js/jquery-1.11.2.min.js'%}"></script>
+<script src="/static/js/jquery-1.10.2.js"></script>
+<script src="/static/js/jquery-ui.js"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+</head>
+<body>
+<div>
+  <div class="list-group" style="float:left;width:300px;max-width:300px;" id="fileSelectionPanel">
+		  <ul class="filesList">
+ {% for file in file_name %}
+    <li class="list-group-item"><a  id="{{file}}" onclick='canvasImage($(this));' src="{% static 'images'%}{{ path }}{{file}}" data-name="{{file}}">{{ file }} </a></li>
+{% endfor %}
+</ul>
+
+		<div id="showthumbnail">
+			
+		</div>
+		
+	</div>
+	<div style="float:left;width:800px;">
+		<div id="canvasDiv">
+			<canvas id="canvas" width="800px" height="600px"></canvas>
+		</div>
+        
+	</div>
+	 <div style="float:left;width:125px;">
+         <h3>Tag Count <span class="label label-default" id="tags_count"></span></h3>   
+
+        <form method="post" name="example form" action = "" >{% csrf_token %}
+        <input type="hidden" id="img_name" value="" name="img_name"/>
+       
+        </form>
+        <a class="btn btn-info" href="{% url "operate" %}">Back</a>
+      <select id = "svmName" class = "form-control" >
+            {% for svm in svms %}
+                <option value="{{ svm.svm_name }}">{{ svm.svm_name }}</option>
+            {% endfor %}
+        </select>
+		        <form method = "post" id = "frm_upload" action = "/myapp/upload/{{ pk }}" enctype="multipart/form-data">{% csrf_token %}
+            <input type="file" id = "file_id" multiple="true" name="docfile" accept=".jpg,.JPG,.jpeg,.JPEG" class = "btn btn-default btn-sm"required>
+<div class="dropup">
+    <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    Dropdown
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to train" name="train" ></input></a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to test" name="test" ></input></a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><input class = "btn btn-link" type="submit" value="Upload to demo" name="demo" ></input></a></li>
+             </ul>
+</div>
+            
+            
+        </form>
+
+        </div>
+		
+
+	</div>
+</div>
+<input type="hidden" id="currentImg">
+<input type = "hidden" id = "pk" value = "{{ pk }}">
+
+<script>
+	var imgTagObject = {};
+    var i = 0;
+var 
+    rect = {},
+    drag = false;
+
+var fillStyles = { 
+	"Orange" : "#FF9A00",
+	"Red" : "#ED1B24",
+	"Blue" : "#183883",
+	"Yello" : "#FDF000",
+	"White" : "#F60001",
+};
+var cvas = '';
+function initDraw() {
+	cvas = document.getElementById('canvasDiv');
+    function setMousePosition(e) {
+        var ev = e || window.event; //Moz || IE
+        if (ev.pageX) { //Moz
+            mouse.x = ev.pageX + window.pageXOffset;
+            mouse.y = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+            mouse.x = ev.clientX + document.body.scrollLeft;
+            mouse.y = ev.clientY + document.body.scrollTop;
+        }
+    };
+
+    var mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+    };
+    var element = null;
+    var node = null;
+    cvas.onmousemove = function (e) {
+        setMousePosition();
+        if (element !== null) {
+            element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+            element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+            element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+            element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+        }
+    }
+
+    cvas.onclick = function (e) {
+        if (element !== null) {
+			var imgName = $("#currentImg").val();
+			if( imgTagObject[ imgName ] == undefined ) imgTagObject[ imgName ] = {};
+			if( imgTagObject[ imgName ][ currentColor ] == undefined ) imgTagObject[ imgName ][ currentColor ] = [];
+			var x = element.style.left;
+			x = x.replace(/[^0-9]/g,'');
+            $("#left").val(x);
+			var y = element.style.top;
+			y = y.replace(/[^0-9]/g,'');
+            $("#top").val(y);
+			var w = element.style.width;
+			w = w.replace(/[^0-9]/g,'');
+            $("#width").val(w);
+			var h = element.style.height;
+			h = h.replace(/[^0-9]/g,'');
+            $("#height").val(h);
+            tagId = element.id;
+			imgTagObject[ imgName ][ currentColor ].push( {'id':tagId,'l':x - 300,'t':y ,'w': w ,'h':h} );
+			element = null;
+            cvas.style.cursor = "default";
+            i++;
+        } else {
+            mouse.startX = mouse.x;
+            mouse.startY = mouse.y;
+            element = document.createElement('div');
+            element.className = currentColor;
+            element.className += ' tagbox';
+            element.id = currentColor+i;
+            element.innerHTML = element.id;
+            element.style.left = mouse.x + 'px';
+            element.style.top = mouse.y + 'px';
+            cvas.appendChild(element);
+            cvas.style.cursor = "crosshair";
+        }
+        
+    }
+}
+
+
+$(document).ready( function() {
+	initDraw();
+    
+});
+
+function canvasImage( el ) {
+	$("#canvasDiv").html( '<canvas id="canvas" width="800px" height="600px" ></canvas>' );
+	var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+	var src = $( el ).attr( 'src' );
+	
+	var img = new Image();
+	img.src = src;
+	var width = img.width; // this will be 300
+	var height = img.height;
+	
+	img.onload = function() {
+		//ctx.drawImage(img, img.width, img.height);
+		ctx.drawImage(img, 0,0);
+	};
+    var imgName = $(el).data("name");
+	$( "#currentImg" ).val( imgName );
+    $( "#img_name" ).val( imgName );
+	//ctx.drawImage(img, width, height);
+	//delete imgTagObject[$(el).data("name")];
+	removeThumbHighlight();
+	addThumbHighlight( el );
+    $(".badge").hide();
+    var pk = $("#pk").val();
+    var svmName = $("#svmName").val();
+    console.log(svmName);
+    $.ajax({
+                        url : "/myapp/result/"+pk+"/"+svmName, 
+                        type : "POST",
+                        dataType: "json", 
+                        data : {
+                            client_response : imgName,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(data) {
+                                $("#tags_count").html(0);
+                                $.each( data.tags, function( imgname, tags ){
+                                    var w = Math.abs(tags.r - tags.l);
+                                    var h = Math.abs(tags.t - tags.b);
+                                    var l =  parseInt(tags.l)+300;
+                                    //console.log(l);
+                                    console.log(tags.count);
+                                    $("#tags_count").html(tags.count);
+                                    //$(".label label-default").val(tags.count);
+                                    
+                                    spanTags(h,w,tags.t,l,44, 'Orange');
+                                });
+                               // $('#result').append( 'Server Response: ' + json.server_response);
+                            },
+                            error : function(xhr,errmsg,err) {
+                                //alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+    if( imgName in imgTagObject ) { 
+        $.each( imgTagObject[imgName], function( color, tags ){ 
+            $.each( tags, function( tagIndex, tag ){
+                spanTags(tag.h,tag.w,tag.t,tag.l+300,tag.id, color );
+            });
+            
+            //console.log("image_data"+tags.toString());
+        });
+    }
+}
+
+var currentColor = 'Orange',
+    currentTagId = ''
+;
+
+var strokeColor = fillStyles[ currentColor ];
+
+function changeColor( el ) {
+	var id = $( el ).attr( 'id' );
+	currentColor = id;
+	strokeColor = fillStyles[ currentColor ];
+	$( "#currentColor" ).html( $( el ).html() );
+}
+
+function saveTags() {
+	//var data = "data[tags]=" + JSON.stringify( imgTagObject );
+    /*var data = JSON.stringify( imgTagObject );
+                    $.ajax({
+                        url : "ajax", 
+                        type : "POST",
+                        dataType: "json", 
+                        data : {
+                            client_response : data,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            success : function(json) {
+                                $('#result').append( 'Server Response: ' + json.server_response);
+                            },
+                            error : function(xhr,errmsg,err) {
+                                alert(xhr.status + ": " + xhr.responseText);
+                            }
+                    });
+                    
+	/*$.ajax({
+		url: 'select',
+		data:data,
+		type:'post',
+		dataType:'json',
+		success: function( data ) {
+			alert( data.Reason );
+			imgTagObject = {};
+		}
+	});*/
+}
+
+function removeThumbHighlight() {
+	$("img").each( function() {
+		$(this).removeClass( 'thumbHighlight' );
+	})
+}
+
+function addThumbHighlight( el ) {
+	$( el ).addClass( 'thumbHighlight' );
+}
+
+function editTag(tid) {
+    //document.getElementById("currentTag").innerHTML = document.getElementById(spnid).innerHTML
+   /* if( typeof tid != undefined ) {
+        $("#currentTag").html( tid );
+        tageditid = tid;
+    }*/
+    var x,y,top,left,a1,a2,a3,a4;
+    tageditid = tid;
+    //document.getElementById("currentTag").innerHTML = tid;
+    $(".tagbox").css("border-width", "1px");
+    $("#"+tageditid).css("border-width", "3px");
+    if(tid == null)
+    {   
+        //tageditid = document.getElementById("currentTag").innerHTML;
+        x = document.getElementById("height");
+        y = document.getElementById("width");
+        top = document.getElementById("top");
+        left = document.getElementById("left");
+    }
+    else
+    {
+        //document.getElementById("currentTag").innerHTML=tid;
+        x = $("#"+tageditid).css("height"); //document.getElementById("height");
+        y = $("#"+tageditid).css("width"); //document.getElementById("width");
+        top = $("#"+tageditid).css("top"); //document.getElementById("top");
+        left = $("#"+tageditid).css("left"); //document.getElementById("left");
+        console.log(tageditid);
+        a1 = x.replace(/[A-Za-z$-]/g, "");
+        a2 = y.replace(/[A-Za-z$-]/g, "");
+        a3 = top.replace(/[A-Za-z$-]/g, "");
+        a4 = left.replace(/[A-Za-z$-]/g, "");
+        $("#height").val(parseInt(a1));
+        $("#width").val(parseInt(a2));
+        $("#top").val(parseInt(a3));
+        $("#left").val(parseInt(a4));
+    }
+    x = document.getElementById("height");
+    y = document.getElementById("width");
+    top = document.getElementById("top");
+    left = document.getElementById("left");   
+    $("#"+tageditid).css("height", x.value);
+    $("#"+tageditid).css("width", y.value);
+    $("#"+tageditid).css("top", top.value + 'px');
+    $("#"+tageditid).css("left", left.value + 'px');
+}
+
+function spanTags(height,width,top,left,id,color) {
+    if( typeof color == undefined ) {
+        color = currentColor;
+    }
+            element = document.createElement('div');
+            element.className = color;
+            element.className += ' tagbox';
+            element.id = id;
+            //$("#spn"+id).show();
+            //document.getElementById("currentTag").innerHTML = element.id;
+            //element.innerHTML = id;
+            element.style.height = height + 'px';
+            element.style.width = width + 'px';
+            element.style.left = left + 'px';
+            element.style.top = top + 'px';
+            cvas.appendChild(element);
+ }           
+
+
+var spanclickhandler = function () {
+   spanid = $(this).attr('id');
+   editid = $(this).html();
+   console.log(editid);
+   editTag(editid);
+};
+
+
+
+</script>
+
+
+
+
+
+</body></html>
+

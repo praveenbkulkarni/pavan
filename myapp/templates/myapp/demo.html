@@ -1,0 +1,391 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Demo</title>
+  <style>
+
+  </style>
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/jquery-ui.css">
+  <script src="{% static 'js/jquery-1.11.2.min.js'%}"></script>
+  <script src="/static/js/jquery-1.10.2.js"></script>
+  <script src="/static/js/jquery-ui.js"></script>
+  <script src="{% static 'js/bootstrap.min.js'%}"></script>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link href="/static/css/common.css" rel="stylesheet">
+  <!-- CSS reset -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Resource style -->
+  <script src="/static/js/modernizr.js"></script>
+  <!-- Modernizr -->
+  <script src="/static/js/jquery-1.10.2.js"></script>
+  <script src="/static/js/main.js"></script>
+</head>
+
+<body>
+
+<div>
+
+    <div class="list-group" style="float:left;width:300px;max-width:300px;" id="fileSelectionPanel">
+
+      <!-- <ul class="filesList">
+          {% for file in file_name %}
+            <li class="list-group-item"><a id="{{file}}" onclick='canvasImage($(this));' src="{% static 'images'%}{{ path }}{{file}}" data-name="{{file}}">{{ file }} </a></li>
+          {% endfor %}
+      </ul>-->
+
+    </div>
+
+    <div style="float:left;width:800px;">
+
+      <div id="canvasDiv">
+
+        <canvas id="canvas" width="800px" height="600px">
+
+        </canvas>
+
+      </div>
+
+    </div>
+
+    <div id="sidePanel" style="float:left;width:125px; width: 230px;">
+
+      <h3 style="color: black;">Tag Count
+        <span class="label label-default" id="tags_count" style="margin-left: 10px;margin-top: 10px;"></span>
+      </h3>
+
+      </br>
+
+      <select id="svmName" class="form-control" onchange="drawTags()">
+
+        {% for svm in svms %}
+
+        <option value="{{ svm.svm_name }}">{{ svm.svm_name }}</option>
+
+        {% endfor %}
+
+      </select>
+
+      </br>
+
+      <div>
+
+        <a style="margin-top: 10px;"href="#0" class="cd-btn">Upload Image</a>
+
+      </div>
+
+      </br>
+
+      <a class="btn btn-default btn-sm" href="{% url 'brand_list' cmp_id %}"><span class="glyphicon glyphicon-backward"> Brand List</span></a>
+
+      <div class="cd-panel from-right">
+
+        <header class="cd-panel-header">
+
+          <h1>Upload Image</h1>
+
+          <a href="#0" class="cd-panel-close">Close</a>
+
+        </header>
+
+        <div class="cd-panel-container">
+
+          <div class="cd-panel-content">
+
+            <form method="post" id="frm_upload" action="/myapp/upload/{{ pk }}" enctype="multipart/form-data">{% csrf_token %}
+
+              <input type="file" id="file_id" multiple="true" name="docfile" accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG" class="btn btn-default btn-sm" required>
+
+              <div class="dropdown">
+
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                  Dropdown
+
+                  <span class="caret"></span>
+
+                </button>
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+
+                  <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">
+                      <input class="btn btn-link" type="submit" value="Upload to train" name="train"></input>
+                    </a>
+                  </li>
+
+                  <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">
+                      <input class="btn btn-link" type="submit" value="Upload to test" name="test"></input>
+                    </a>
+                  </li>
+
+                  <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#">
+                      <input class="btn btn-link" type="submit" value="Upload to demo" name="demo"></input>
+                    </a>
+                  </li>
+
+                </ul>
+
+              </div>
+
+
+            </form>
+
+          </div>
+          <!-- cd-panel-content -->
+
+        </div>
+        <!-- cd-panel-container -->
+
+      </div>
+      <!-- cd-panel -->
+
+    </div>
+
+    <div id="statusContainer" style="visibility: hidden;">
+      <div id="statusMessageContainer">Loading...</div>
+    </div>
+    <div id="message">
+    {% if messages %}
+        {% for message in messages %}
+        <!-- <div id="statusContainer" style="visibility: hidden;"> -->
+          <div id="statusMessageContainer" >{{ message }}..</div>
+        <!-- </div> -->
+        {% endfor %}
+    {% endif %}
+  </div>
+
+  </div>
+  <input type="hidden" id="currentImg">
+  <input type="hidden" id="pk" value="{{ pk }}">
+
+  <script>
+    var tagData = {};
+    var imgTagObject = {};
+    var i = 0;
+    var
+      rect = {},
+      drag = false;
+
+    var fillStyles = {
+      "Orange": "#FF9A00",
+      "Red": "#ED1B24",
+      "Blue": "#183883",
+      "Yello": "#FDF000",
+      "White": "#F60001",
+    };
+    var cvas = '';
+
+    function initDraw() {
+      cvas = document.getElementById('canvasDiv');
+
+      function setMousePosition(e) {
+        var ev = e || window.event; //Moz || IE
+        if (ev.pageX) { //Moz
+          mouse.x = ev.pageX + window.pageXOffset;
+          mouse.y = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+          mouse.x = ev.clientX + document.body.scrollLeft;
+          mouse.y = ev.clientY + document.body.scrollTop;
+        }
+      };
+
+      var mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+      };
+      var element = null;
+      var node = null;
+      cvas.onmousemove = function(e) {
+        setMousePosition();
+        if (element !== null) {
+          element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
+          element.style.height = Math.abs(mouse.y - mouse.startY) + 'px';
+          element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px';
+          element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
+        }
+      }
+
+    }
+
+    function getImages(){
+
+      var mypage_url = $(location).attr('pathname');
+      var myarry = mypage_url.split("/");
+      var url = "/fetch/"+myarry[3]+"/"+myarry[2];
+      $.getJSON(url,function( data ){
+        var ul = "<ul class = 'filesList' >";
+          $.each( data, function( k,file_list ) {
+            $.each( file_list, function ( k1,files ) {
+              $.each( files, function( k2,fileNames ){
+                var file_path = "/static/images"+k1+fileNames
+                ul += "<li class='list-group-item smallbox'><a id = "+fileNames+" src ='"+file_path+ "' onclick='canvasImage($(this));' data-name="+fileNames+">"+fileNames+"</a></li>";
+              });
+            });
+          });
+          ul += "</ul>";
+          $("#fileSelectionPanel").html(ul);
+      });
+      $("#message").hide();
+  }
+
+    $(document).ready(function() {
+
+      initDraw();
+      getImages();
+
+    });
+
+    function ToggleStatus() {
+
+      var toggleButton = document.getElementById('toggleButton');
+
+      if (document.getElementById('statusContainer').style.visibility == 'visible') {
+          toggleButton.value = 'Show';
+          document.getElementById('statusContainer').style.visibility = 'hidden';
+      } else {
+        toggleButton.value = 'Hide';
+        document.getElementById('statusContainer').style.visibility = 'visible';
+     }
+    }
+
+
+    function canvasImage(el) {
+      // alert('inside canvas');
+      $("#statusMessageContainer").show();
+      document.getElementById('statusContainer').style.visibility = 'visible';
+      // alert('after');return false;
+      $("#canvasDiv").html('<canvas id="canvas" width="800px" height="600px" ></canvas>');
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      var src = $(el).attr('src');
+      var img = new Image();
+      img.src = src;
+      var width = img.width; // this will be 300
+      var height = img.height;
+      img.onload = function() {
+        //ctx.drawImage(img, img.width, img.height);
+        ctx.drawImage(img, 0, 0);
+      };
+      var imgName = $(el).data("name");
+      $("#currentImg").val(imgName);
+      $("#img_name").val(imgName);
+      //ctx.drawImage(img, width, height);
+      //delete imgTagObject[$(el).data("name")];
+      removeThumbHighlight();
+      addThumbHighlight(el);
+      $(".badge").hide();
+      var pk = $("#pk").val();
+      var svmName = $("#svmName").val();
+      $.ajax({
+        url: "/myapp/result/" + pk + "/" + svmName,
+        type: "POST",
+        dataType: "json",
+        data: {
+          client_response: imgName,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data) {
+          tagData = data
+          $("#tags_count").html(0);
+          $.each(data.tags, function(imgname, tags) {
+            document.getElementById('statusContainer').style.visibility = 'visible';
+            var w = Math.abs(tags.r - tags.l);
+            var h = Math.abs(tags.t - tags.b);
+            var l = parseInt(tags.l) + 300;
+            $("#tags_count").html(tags.count);
+            spanTags(h, w, tags.t, l, 44, 'Orange');
+
+          });
+
+          $("#statusMessageContainer").hide();
+          // $('#result').append( 'Server Response: ' + json.server_response);
+
+
+        },
+        error: function(xhr, errmsg, err) {
+          $("#statusMessageContainer").hide();
+          //alert(xhr.status + ": " + xhr.responseText);
+        }
+
+      });
+      if (imgName in imgTagObject) {
+        $.each(imgTagObject[imgName], function(color, tags) {
+          $.each(tags, function(tagIndex, tag) {
+            spanTags(tag.h, tag.w, tag.t, tag.l + 300, tag.id, color);
+          });
+
+          //console.log("image_data"+tags.toString());
+        });
+      }
+    }
+
+    var currentColor = 'Orange',
+      currentTagId = '';
+
+    var strokeColor = fillStyles[currentColor];
+
+    function changeColor(el) {
+      var id = $(el).attr('id');
+      currentColor = id;
+      strokeColor = fillStyles[currentColor];
+      $("#currentColor").html($(el).html());
+    }
+
+
+    function removeThumbHighlight() {
+      $("img").each(function() {
+        $(this).removeClass('thumbHighlight');
+      })
+    }
+
+    function addThumbHighlight(el) {
+      $(el).addClass('thumbHighlight');
+    }
+
+
+    function drawTags() {
+      $.each(tagData.tags, function(imgname, tags) {
+        var w = Math.abs(tags.r - tags.l);
+        var h = Math.abs(tags.t - tags.b);
+        var l = parseInt(tags.l) + 300;
+        //console.log(l);
+        console.log(tags.count);
+        $("#tags_count").html(tags.count);
+        //$(".label label-default").val(tags.count);
+
+        spanTags(h, w, tags.t, l, 44, 'Red');
+      });
+
+    }
+
+    function spanTags(height, width, top, left, id, color) {
+      if (typeof color == undefined) {
+        color = currentColor;
+      }
+      element = document.createElement('div');
+      element.className = color;
+      element.className += ' tagbox';
+      element.id = id;
+      element.style.height = height + 'px';
+      element.style.width = width + 'px';
+      element.style.left = left + 'px';
+      element.style.top = top + 'px';
+      cvas.appendChild(element);
+    }
+
+
+
+  </script>
+</body>
+
+</html>
